@@ -13,7 +13,7 @@ const BodyText = ({children, style = {}, fontLight = false}: TProps) => {
 const styles = ({fontLight}: {fontLight: boolean}) =>
   StyleSheet.create({
     text: {
-      fontWeight: fontLight ? '300' : '500',
+      fontWeight: fontLight ? '400' : '600',
       fontSize: 16,
     },
   });

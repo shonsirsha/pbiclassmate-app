@@ -11,7 +11,9 @@ const ReadingCardBig = ({
   return (
     <TouchableOpacity style={styles({color}).card} activeOpacity={0.75}>
       <BodyText>{title}</BodyText>
-      <BodyText style={styles().detailText}>{detail}</BodyText>
+      <BodyText fontLight style={styles().detailText}>
+        {detail}
+      </BodyText>
     </TouchableOpacity>
   );
 };

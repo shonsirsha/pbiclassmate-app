@@ -5,35 +5,39 @@
  * @format
  */
 
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  useColorScheme,
-} from 'react-native';
-import QRCodeButton from './components/Buttons/QRCodeButton';
-import ReadingCardBig from './components/Cards/ReadingCardBig';
-import VoccabCardSmall from './components/Cards/VoccabCardSmall';
-import HeadingText from './components/Text/HeadingText';
+import HomeScreen from './screens/HomeScreen';
+import QRCodeScannerScreen from './screens/QRCodeScannerScreen';
+
+export type RootStackParamList = {
+  HomeScreen: undefined;
+  QRCodeScannerScreen: undefined;
+};
+
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function App(): JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-
   return (
-    <SafeAreaView style={{backgroundColor: '#fff'}}>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <ScrollView contentInsetAdjustmentBehavior="automatic">
-        <HeadingText>Welcome back!</HeadingText>
-        <VoccabCardSmall voccab="Pergi" />
-        <QRCodeButton />
-        <ReadingCardBig
-          title="Peter Pesan Kamar Hotel"
-          color="#FAE9DF"
-          detail="A1 - Pelajaran 3"
-        />
-      </ScrollView>
-    </SafeAreaView>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Group>
+          <Stack.Screen
+            name="HomeScreen"
+            component={HomeScreen}
+            options={{headerShown: false}}
+          />
+        </Stack.Group>
+        <Stack.Group
+          screenOptions={{presentation: 'modal', headerShown: false}}>
+          <Stack.Screen
+            name="QRCodeScannerScreen"
+            component={QRCodeScannerScreen}
+          />
+        </Stack.Group>
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 

@@ -3,19 +3,20 @@ import {TouchableOpacity, StyleSheet} from 'react-native';
 import {COLORS} from '../../constants/COLORS';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-type TProps = {
+type TPRops = {
+  played: boolean;
   onPress: () => void;
-  style?: {};
 };
 
-const QRCodeButton = ({onPress, style}: TProps) => {
-  const myIcon = <Icon name="qrcode" size={44} color="#fff" />;
+const PlayPauseButton = ({played, onPress}: TPRops) => {
+  const playIcon = <Icon name="play" size={30} color="#fff" />;
+  const pauseIcon = <Icon name="pause" size={30} color="#fff" />;
   return (
     <TouchableOpacity
       activeOpacity={0.75}
       onPress={onPress}
-      style={[styles.button, style]}>
-      {myIcon}
+      style={styles.button}>
+      {played ? playIcon : pauseIcon}
     </TouchableOpacity>
   );
 };
@@ -31,4 +32,4 @@ const styles = StyleSheet.create({
     borderRadius: 24,
   },
 });
-export default QRCodeButton;
+export default PlayPauseButton;
