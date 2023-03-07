@@ -7,9 +7,9 @@ const ReadingCardBig = ({
   title,
   color,
   detail,
-}: Omit<Reading, 'audioURL' | 'relevantVoccabs'>) => {
+}: Omit<Reading, 'audioURL' | 'relevantVoccabs' | 'id'>) => {
   return (
-    <TouchableOpacity style={styles({color}).card} activeOpacity={0.75}>
+    <TouchableOpacity style={styles({color}).card} activeOpacity={0.55}>
       <BodyText>{title}</BodyText>
       <BodyText fontLight style={styles().detailText}>
         {detail}

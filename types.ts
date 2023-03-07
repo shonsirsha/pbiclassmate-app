@@ -5,6 +5,7 @@ export type Voccabs = {
 };
 
 export type Reading = {
+  id: string;
   title: string;
   color: string;
   audioURL: string;
