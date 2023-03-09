@@ -11,11 +11,13 @@ import {SafeAreaView, StatusBar, StyleSheet, View} from 'react-native';
 import {RootStackParamList} from '../App';
 import QRCodeButton from '../components/Buttons/QRCodeButton';
 import SavedReadings from '../components/SavedReadings/SavedReadings';
+import SavedVocab from '../components/SavedVocab/SavedVocab';
 import BodyText from '../components/Text/BodyText';
 import HeadingText from '../components/Text/HeadingText';
-import {Reading} from '../types';
+import {Reading, Vocabs} from '../types';
 
 type SavedReadingsCardWithID = Omit<Reading, 'relevantVoccabs' | 'audioURL'>;
+type SavedVocabsCardWithID = Omit<Vocabs, 'nameEnglish' | 'audioURL'>;
 
 const MOCKED_SAVED_READING: SavedReadingsCardWithID[] = [
   {
@@ -25,18 +27,26 @@ const MOCKED_SAVED_READING: SavedReadingsCardWithID[] = [
     detail: 'A1 - Pelajaran 3',
   },
   {id: '1234', title: 'asd', color: '#E9F7FA', detail: 'A1 - Pelajaran 3'},
-  {id: '12334', title: 'asd', color: '#9CFCA8', detail: 'A1 - Pelajaran 1'},
+  {id: '1233214', title: 'asd', color: '#9CFCA8', detail: 'A1 - Pelajaran 1'},
   {id: '12334', title: 'asd', color: '#F7E7FF', detail: 'A1 - Pelajaran 1'},
 ];
 
+const MOCKED_SAVED_VOCABS: SavedVocabsCardWithID[] = [
+  {id: '1', nameIndonesian: 'Tertawa'},
+  {id: '2', nameIndonesian: 'Lelah'},
+  {id: '3', nameIndonesian: 'Lelah'},
+  {id: '4', nameIndonesian: 'Berlari'},
+];
 const HomeScreen = ({
   navigation,
 }: NativeStackScreenProps<RootStackParamList, 'HomeScreen'>) => {
   const [savedReadings, setSavedReadings] = useState<SavedReadingsCardWithID[]>(
     [],
   );
+  const [savedVocabs, setSavedVocabs] = useState<SavedVocabsCardWithID[]>([]);
   useEffect(() => {
     setSavedReadings(MOCKED_SAVED_READING);
+    setSavedVocabs(MOCKED_SAVED_VOCABS);
   }, []);
 
   const handlePressQRCodeButton = () => {
@@ -54,6 +64,7 @@ const HomeScreen = ({
             </BodyText>
           </View>
           <SavedReadings savedReadings={savedReadings} />
+          <SavedVocab savedVocabs={savedVocabs} />
         </View>
         <QRCodeButton
           onPress={handlePressQRCodeButton}
@@ -86,6 +97,16 @@ const styles = StyleSheet.create({
     marginLeft: 'auto',
     marginRight: 'auto',
     marginBottom: 24,
+  },
+
+  container: {
+    flex: 1,
+    padding: 24,
+    backgroundColor: 'grey',
+  },
+  contentContainer: {
+    flex: 1,
+    alignItems: 'center',
   },
 });
 

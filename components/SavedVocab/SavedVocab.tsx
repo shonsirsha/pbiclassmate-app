@@ -1,36 +1,32 @@
 import React from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
-import {Reading} from '../../types';
+import {Vocabs} from '../../types';
 import LinkButton from '../Buttons/LinkButton';
-import ReadingCardBig from '../Cards/ReadingCardBig';
+import VoccabCardSmall from '../Cards/VocabCardSmall';
 import HeadingText from '../Text/HeadingText';
 
 type TProps = {
-  savedReadings: Omit<Reading, 'relevantVoccabs' | 'audioURL'>[];
+  savedVocabs: Omit<Vocabs, 'nameEnglish' | 'audioURL'>[];
 };
 
-const SavedReadings = ({savedReadings}: TProps) => {
+const SavedVocab = ({savedVocabs}: TProps) => {
   return (
     <View style={styles.savedReadingsContainer}>
       <HeadingText style={styles.savedReadingsHeader}>
-        Saved readings
+        Saved vocabulary
       </HeadingText>
       <ScrollView
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={styles.savedReadingsScrollViewContentContainer}
         horizontal>
-        {savedReadings.map(reading => (
-          <View key={reading.id} style={styles.readingCardContainer}>
-            <ReadingCardBig
-              title={reading.title}
-              detail={reading.detail}
-              color={reading.color}
-            />
+        {savedVocabs.map(vocab => (
+          <View key={vocab.id} style={styles.readingCardContainer}>
+            <VoccabCardSmall vocab={vocab.nameIndonesian} />
           </View>
         ))}
       </ScrollView>
       <View style={styles.linkButtonCotnainer}>
-        <LinkButton onPress={() => {}}>See all saved readings</LinkButton>
+        <LinkButton onPress={() => {}}>See all saved vocabulary</LinkButton>
       </View>
     </View>
   );
@@ -55,4 +51,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SavedReadings;
+export default SavedVocab;

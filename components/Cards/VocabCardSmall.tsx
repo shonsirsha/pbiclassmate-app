@@ -4,17 +4,17 @@ import {COLORS} from '../../constants/COLORS';
 import BodyText from '../Text/BodyText';
 
 type TProps = {
-  voccab: string;
+  vocab: string;
 };
 
-const VoccabCardSmall = ({voccab}: TProps) => {
+const VocabCardSmall = ({vocab}: TProps) => {
   const handleTap = () => {};
   return (
     <TouchableOpacity
       onPress={handleTap}
-      activeOpacity={0.75}
+      activeOpacity={0.55}
       style={styles.view}>
-      <BodyText>{voccab}</BodyText>
+      <BodyText>{vocab}</BodyText>
     </TouchableOpacity>
   );
 };
@@ -22,7 +22,8 @@ const VoccabCardSmall = ({voccab}: TProps) => {
 const styles = StyleSheet.create({
   view: {
     backgroundColor: COLORS.green,
-    width: 102,
+    minWidth: 102,
+    paddingHorizontal: 16,
     height: 48,
     display: 'flex',
     alignItems: 'center',
@@ -31,4 +32,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default VoccabCardSmall;
+export default VocabCardSmall;

@@ -1,4 +1,5 @@
-export type Voccabs = {
+export type Vocabs = {
+  id: string;
   nameIndonesian: string;
   nameEnglish: string;
   audioURL: string;
@@ -10,5 +11,5 @@ export type Reading = {
   color: string;
   audioURL: string;
   detail: string;
-  relevantVoccabs: Voccabs[];
+  relevantVoccabs: Vocabs[];
 };

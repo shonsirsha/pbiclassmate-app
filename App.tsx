@@ -1,3 +1,5 @@
+import 'react-native-gesture-handler';
+
 /**
  * Sample React Native App
  * https://github.com/facebook/react-native
@@ -8,8 +10,10 @@
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React from 'react';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import HomeScreen from './screens/HomeScreen';
 import QRCodeScannerScreen from './screens/QRCodeScannerScreen';
+import VocabModalSheet from './components/VocabModalSheet/VocabModalSheet';
 
 export type RootStackParamList = {
   HomeScreen: undefined;
@@ -20,24 +24,30 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function App(): JSX.Element {
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Group>
-          <Stack.Screen
-            name="HomeScreen"
-            component={HomeScreen}
-            options={{headerShown: false}}
-          />
-        </Stack.Group>
-        <Stack.Group
-          screenOptions={{presentation: 'modal', headerShown: false}}>
-          <Stack.Screen
-            name="QRCodeScannerScreen"
-            component={QRCodeScannerScreen}
-          />
-        </Stack.Group>
-      </Stack.Navigator>
-    </NavigationContainer>
+    <GestureHandlerRootView style={{flex: 1}}>
+      <VocabModalSheet />
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Group>
+            <Stack.Screen
+              name="HomeScreen"
+              component={HomeScreen}
+              options={{headerShown: false}}
+            />
+          </Stack.Group>
+          <Stack.Group
+            screenOptions={{
+              presentation: 'modal',
+              headerShown: false,
+            }}>
+            <Stack.Screen
+              name="QRCodeScannerScreen"
+              component={QRCodeScannerScreen}
+            />
+          </Stack.Group>
+        </Stack.Navigator>
+      </NavigationContainer>
+    </GestureHandlerRootView>
   );
 }
 
