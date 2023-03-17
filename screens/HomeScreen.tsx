@@ -14,10 +14,10 @@ import SavedReadings from '../components/SavedReadings/SavedReadings';
 import SavedVocab from '../components/SavedVocab/SavedVocab';
 import BodyText from '../components/Text/BodyText';
 import HeadingText from '../components/Text/HeadingText';
-import {Reading, Vocabs} from '../types';
+import VocabModalSheet from '../components/VocabModalSheet/VocabModalSheet';
+import {Reading, Vocab} from '../types';
 
 type SavedReadingsCardWithID = Omit<Reading, 'relevantVoccabs' | 'audioURL'>;
-type SavedVocabsCardWithID = Omit<Vocabs, 'nameEnglish' | 'audioURL'>;
 
 const MOCKED_SAVED_READING: SavedReadingsCardWithID[] = [
   {
@@ -31,11 +31,11 @@ const MOCKED_SAVED_READING: SavedReadingsCardWithID[] = [
   {id: '12334', title: 'asd', color: '#F7E7FF', detail: 'A1 - Pelajaran 1'},
 ];
 
-const MOCKED_SAVED_VOCABS: SavedVocabsCardWithID[] = [
-  {id: '1', nameIndonesian: 'Tertawa'},
-  {id: '2', nameIndonesian: 'Lelah'},
-  {id: '3', nameIndonesian: 'Lelah'},
-  {id: '4', nameIndonesian: 'Berlari'},
+const MOCKED_SAVED_VOCABS: Vocab[] = [
+  {id: '1', nameIndonesian: 'Tertawa', nameEnglish: 'Laugh', audioURL: ''},
+  {id: '2', nameIndonesian: 'Lelah', nameEnglish: 'Tired', audioURL: ''},
+  {id: '3', nameIndonesian: 'Senyum', nameEnglish: 'Smile', audioURL: ''},
+  {id: '4', nameIndonesian: 'Berlari', nameEnglish: 'Run', audioURL: ''},
 ];
 const HomeScreen = ({
   navigation,
@@ -43,7 +43,7 @@ const HomeScreen = ({
   const [savedReadings, setSavedReadings] = useState<SavedReadingsCardWithID[]>(
     [],
   );
-  const [savedVocabs, setSavedVocabs] = useState<SavedVocabsCardWithID[]>([]);
+  const [savedVocabs, setSavedVocabs] = useState<Vocab[]>([]);
   useEffect(() => {
     setSavedReadings(MOCKED_SAVED_READING);
     setSavedVocabs(MOCKED_SAVED_VOCABS);
@@ -55,6 +55,7 @@ const HomeScreen = ({
   return (
     <SafeAreaView style={styles.safeArea}>
       <StatusBar barStyle={'dark-content'} />
+      <VocabModalSheet />
       <View style={styles.view}>
         <View>
           <View style={styles.greetingContainer}>

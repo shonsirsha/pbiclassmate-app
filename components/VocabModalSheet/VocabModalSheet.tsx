@@ -1,37 +1,39 @@
 import {BottomSheetModal, BottomSheetModalProvider} from '@gorhom/bottom-sheet';
-import React, {useRef, useCallback, useEffect} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import React, {useContext} from 'react';
+import {StyleSheet, View} from 'react-native';
+import {VocabModalSheetContext} from '../../context/VocabModalSheetContext';
+import BodyText from '../Text/BodyText';
+import HeadingText from '../Text/HeadingText';
 
 const VocabModalSheet = () => {
-  // ref
-  const bottomSheetModalRef = useRef<BottomSheetModal>(null);
+  const {vocab, bottomSheetModalRef, closeVocab} = useContext(
+    VocabModalSheetContext,
+  );
 
-  const handleSheetChanges = useCallback((index: number) => {
-    console.log('handleSheetChanges', index);
-  }, []);
-
-  useEffect(() => {
-    bottomSheetModalRef.current?.present();
-  }, []);
+  const handleOnChange = (index: number) => {
+    if (index === -1) {
+      closeVocab();
+    }
+  };
 
   return (
     <BottomSheetModalProvider>
-      {/* <Button
-        onPress={handlePresentModalPress}
-        title="Present Modal"
-        color="black"
-      /> */}
       <BottomSheetModal
         ref={bottomSheetModalRef}
         index={0}
         enablePanDownToClose
-        snapPoints={['50%', '50%']}
+        snapPoints={['30%', '30%']}
         containerStyle={styles.bottomSheetContainer}
         handleStyle={styles.handle}
         backgroundStyle={styles.background}
-        onChange={handleSheetChanges}>
+        onChange={handleOnChange}>
         <View style={styles.contentContainer}>
-          <Text>Awesomes 🎉</Text>
+          <HeadingText style={styles.indonesian}>
+            {vocab?.nameIndonesian}
+          </HeadingText>
+          <BodyText fontLight style={styles.english}>
+            {vocab?.nameEnglish}
+          </BodyText>
         </View>
       </BottomSheetModal>
     </BottomSheetModalProvider>
@@ -41,7 +43,16 @@ const VocabModalSheet = () => {
 const styles = StyleSheet.create({
   contentContainer: {
     flex: 1,
-    alignItems: 'center',
+    paddingVertical: 32,
+    paddingHorizontal: 24,
+    alignItems: 'flex-start',
+  },
+  indonesian: {
+    fontSize: 28,
+  },
+  english: {
+    marginTop: 8,
+    fontSize: 21,
   },
   background: {
     backgroundColor: '#7AF289',

@@ -13,7 +13,7 @@ import React from 'react';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import HomeScreen from './screens/HomeScreen';
 import QRCodeScannerScreen from './screens/QRCodeScannerScreen';
-import VocabModalSheet from './components/VocabModalSheet/VocabModalSheet';
+import VocabModalSheetProvider from './context/VocabModalSheetProvider';
 
 export type RootStackParamList = {
   HomeScreen: undefined;
@@ -25,28 +25,29 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 function App(): JSX.Element {
   return (
     <GestureHandlerRootView style={{flex: 1}}>
-      <VocabModalSheet />
-      <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Group>
-            <Stack.Screen
-              name="HomeScreen"
-              component={HomeScreen}
-              options={{headerShown: false}}
-            />
-          </Stack.Group>
-          <Stack.Group
-            screenOptions={{
-              presentation: 'modal',
-              headerShown: false,
-            }}>
-            <Stack.Screen
-              name="QRCodeScannerScreen"
-              component={QRCodeScannerScreen}
-            />
-          </Stack.Group>
-        </Stack.Navigator>
-      </NavigationContainer>
+      <VocabModalSheetProvider>
+        <NavigationContainer>
+          <Stack.Navigator>
+            <Stack.Group>
+              <Stack.Screen
+                name="HomeScreen"
+                component={HomeScreen}
+                options={{headerShown: false}}
+              />
+            </Stack.Group>
+            <Stack.Group
+              screenOptions={{
+                presentation: 'modal',
+                headerShown: false,
+              }}>
+              <Stack.Screen
+                name="QRCodeScannerScreen"
+                component={QRCodeScannerScreen}
+              />
+            </Stack.Group>
+          </Stack.Navigator>
+        </NavigationContainer>
+      </VocabModalSheetProvider>
     </GestureHandlerRootView>
   );
 }

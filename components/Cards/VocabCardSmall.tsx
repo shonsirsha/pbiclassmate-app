@@ -1,20 +1,21 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {StyleSheet, TouchableOpacity} from 'react-native';
 import {COLORS} from '../../constants/COLORS';
+import {VocabModalSheetContext} from '../../context/VocabModalSheetContext';
+import {Vocab} from '../../types';
 import BodyText from '../Text/BodyText';
 
-type TProps = {
-  vocab: string;
-};
-
-const VocabCardSmall = ({vocab}: TProps) => {
-  const handleTap = () => {};
+const VocabCardSmall = ({vocab}: {vocab: Vocab}) => {
+  const {displayVocab} = useContext(VocabModalSheetContext);
+  const handleTap = () => {
+    displayVocab(vocab);
+  };
   return (
     <TouchableOpacity
       onPress={handleTap}
       activeOpacity={0.55}
       style={styles.view}>
-      <BodyText>{vocab}</BodyText>
+      <BodyText>{vocab.nameIndonesian}</BodyText>
     </TouchableOpacity>
   );
 };

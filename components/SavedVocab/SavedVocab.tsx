@@ -1,15 +1,11 @@
 import React from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
-import {Vocabs} from '../../types';
+import {Vocab} from '../../types';
 import LinkButton from '../Buttons/LinkButton';
 import VoccabCardSmall from '../Cards/VocabCardSmall';
 import HeadingText from '../Text/HeadingText';
 
-type TProps = {
-  savedVocabs: Omit<Vocabs, 'nameEnglish' | 'audioURL'>[];
-};
-
-const SavedVocab = ({savedVocabs}: TProps) => {
+const SavedVocab = ({savedVocabs}: {savedVocabs: Vocab[]}) => {
   return (
     <View style={styles.savedReadingsContainer}>
       <HeadingText style={styles.savedReadingsHeader}>
@@ -21,7 +17,7 @@ const SavedVocab = ({savedVocabs}: TProps) => {
         horizontal>
         {savedVocabs.map(vocab => (
           <View key={vocab.id} style={styles.readingCardContainer}>
-            <VoccabCardSmall vocab={vocab.nameIndonesian} />
+            <VoccabCardSmall vocab={vocab} />
           </View>
         ))}
       </ScrollView>
