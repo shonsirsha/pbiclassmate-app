@@ -56,6 +56,10 @@ const HomeScreen = ({
   const handlePressGoToSavedReadings = () => {
     navigation.navigate('SavedReadingsScreen');
   };
+
+  const handlePressGoToSavedVocab = () => {
+    navigation.navigate('SavedVocabScreen');
+  };
   return (
     <SafeAreaView style={styles.safeArea}>
       <StatusBar barStyle={'dark-content'} />
@@ -72,7 +76,10 @@ const HomeScreen = ({
             savedReadings={savedReadings}
             onPressGoToSavedReadings={handlePressGoToSavedReadings}
           />
-          <SavedVocab savedVocabs={savedVocabs} />
+          <SavedVocab
+            savedVocabs={savedVocabs}
+            onPressGoToSavedVocab={handlePressGoToSavedVocab}
+          />
         </View>
         <QRCodeButton
           onPress={handlePressQRCodeButton}

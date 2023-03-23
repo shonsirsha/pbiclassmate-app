@@ -8,11 +8,7 @@ import {RootStackParamList} from '../../App';
 type TProps = {
   title: string;
   withBackButton: boolean;
-  navigation: NativeStackNavigationProp<
-    RootStackParamList,
-    'SavedReadingsScreen',
-    undefined
-  >;
+  navigation: NativeStackNavigationProp<RootStackParamList, any, undefined>;
 };
 
 const Header = ({title, withBackButton, navigation}: TProps) => {

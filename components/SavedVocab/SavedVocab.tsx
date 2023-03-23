@@ -5,7 +5,13 @@ import LinkButton from '../Buttons/LinkButton';
 import VoccabCardSmall from '../Cards/VocabCardSmall';
 import HeadingText from '../Text/HeadingText';
 
-const SavedVocab = ({savedVocabs}: {savedVocabs: Vocab[]}) => {
+const SavedVocab = ({
+  savedVocabs,
+  onPressGoToSavedVocab,
+}: {
+  savedVocabs: Vocab[];
+  onPressGoToSavedVocab: () => void;
+}) => {
   return (
     <View style={styles.savedReadingsContainer}>
       <HeadingText style={styles.savedReadingsHeader}>
@@ -22,7 +28,9 @@ const SavedVocab = ({savedVocabs}: {savedVocabs: Vocab[]}) => {
         ))}
       </ScrollView>
       <View style={styles.linkButtonCotnainer}>
-        <LinkButton onPress={() => {}}>See all saved vocabulary</LinkButton>
+        <LinkButton onPress={onPressGoToSavedVocab}>
+          See all saved vocabulary
+        </LinkButton>
       </View>
     </View>
   );
