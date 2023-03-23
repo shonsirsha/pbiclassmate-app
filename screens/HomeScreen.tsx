@@ -19,19 +19,34 @@ import {Reading, Vocab} from '../types';
 
 type SavedReadingsCardWithID = Omit<Reading, 'relevantVoccabs' | 'audioURL'>;
 
-const MOCKED_SAVED_READING: SavedReadingsCardWithID[] = [
+export const MOCKED_SAVED_READING: SavedReadingsCardWithID[] = [
   {
     id: '123',
     title: 'Peter Pesan Kamar Hotel',
     color: '#FAE9DF',
     detail: 'A1 - Pelajaran 3',
   },
-  {id: '1234', title: 'asd', color: '#E9F7FA', detail: 'A1 - Pelajaran 3'},
-  {id: '1233214', title: 'asd', color: '#9CFCA8', detail: 'A1 - Pelajaran 1'},
-  {id: '12334', title: 'asd', color: '#F7E7FF', detail: 'A1 - Pelajaran 1'},
+  {
+    id: '1234',
+    title: 'Ke Rumah Sakit',
+    color: '#E9F7FA',
+    detail: 'A1 - Pelajaran 3',
+  },
+  {
+    id: '1233214',
+    title: 'Kebakaran di Pasar',
+    color: '#9CFCA8',
+    detail: 'A1 - Pelajaran 1',
+  },
+  {
+    id: '12334',
+    title: 'Puasa Tahun 2023',
+    color: '#F7E7FF',
+    detail: 'A1 - Pelajaran 1',
+  },
 ];
 
-const MOCKED_SAVED_VOCABS: Vocab[] = [
+export const MOCKED_SAVED_VOCABS: Vocab[] = [
   {id: '1', nameIndonesian: 'Tertawa', nameEnglish: 'Laugh', audioURL: ''},
   {id: '2', nameIndonesian: 'Lelah', nameEnglish: 'Tired', audioURL: ''},
   {id: '3', nameIndonesian: 'Senyum', nameEnglish: 'Smile', audioURL: ''},

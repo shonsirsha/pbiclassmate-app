@@ -13,7 +13,7 @@ type TProps = {
 
 const Header = ({title, withBackButton, navigation}: TProps) => {
   return (
-    <View>
+    <View style={styles.view}>
       {withBackButton ? (
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <View style={styles.backContainer}>
@@ -28,6 +28,9 @@ const Header = ({title, withBackButton, navigation}: TProps) => {
 };
 
 const styles = StyleSheet.create({
+  view: {
+    paddingBottom: 24,
+  },
   backIcon: {
     fontSize: 24,
     marginRight: 6,
