@@ -52,6 +52,10 @@ const HomeScreen = ({
   const handlePressQRCodeButton = () => {
     navigation.navigate('QRCodeScannerScreen');
   };
+
+  const handlePressGoToSavedReadings = () => {
+    navigation.navigate('SavedReadingsScreen');
+  };
   return (
     <SafeAreaView style={styles.safeArea}>
       <StatusBar barStyle={'dark-content'} />
@@ -64,7 +68,10 @@ const HomeScreen = ({
               Saturday, 04 March
             </BodyText>
           </View>
-          <SavedReadings savedReadings={savedReadings} />
+          <SavedReadings
+            savedReadings={savedReadings}
+            onPressGoToSavedReadings={handlePressGoToSavedReadings}
+          />
           <SavedVocab savedVocabs={savedVocabs} />
         </View>
         <QRCodeButton

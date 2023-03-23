@@ -7,9 +7,10 @@ import HeadingText from '../Text/HeadingText';
 
 type TProps = {
   savedReadings: Omit<Reading, 'relevantVoccabs' | 'audioURL'>[];
+  onPressGoToSavedReadings: () => void;
 };
 
-const SavedReadings = ({savedReadings}: TProps) => {
+const SavedReadings = ({savedReadings, onPressGoToSavedReadings}: TProps) => {
   return (
     <View style={styles.savedReadingsContainer}>
       <HeadingText style={styles.savedReadingsHeader}>
@@ -30,7 +31,9 @@ const SavedReadings = ({savedReadings}: TProps) => {
         ))}
       </ScrollView>
       <View style={styles.linkButtonCotnainer}>
-        <LinkButton onPress={() => {}}>See all saved readings</LinkButton>
+        <LinkButton onPress={onPressGoToSavedReadings}>
+          See all saved readings
+        </LinkButton>
       </View>
     </View>
   );

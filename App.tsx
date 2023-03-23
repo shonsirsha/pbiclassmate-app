@@ -14,10 +14,12 @@ import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import HomeScreen from './screens/HomeScreen';
 import QRCodeScannerScreen from './screens/QRCodeScannerScreen';
 import VocabModalSheetProvider from './context/VocabModalSheetProvider';
+import SavedReadingsScreen from './screens/SavedReadingsScreen';
 
 export type RootStackParamList = {
   HomeScreen: undefined;
   QRCodeScannerScreen: undefined;
+  SavedReadingsScreen: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -43,6 +45,15 @@ function App(): JSX.Element {
               <Stack.Screen
                 name="QRCodeScannerScreen"
                 component={QRCodeScannerScreen}
+              />
+            </Stack.Group>
+            <Stack.Group
+              screenOptions={{
+                headerShown: false,
+              }}>
+              <Stack.Screen
+                name="SavedReadingsScreen"
+                component={SavedReadingsScreen}
               />
             </Stack.Group>
           </Stack.Navigator>
