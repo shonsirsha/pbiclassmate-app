@@ -14,7 +14,6 @@ import SavedReadings from '../components/SavedReadings/SavedReadings';
 import SavedVocab from '../components/SavedVocab/SavedVocab';
 import BodyText from '../components/Text/BodyText';
 import HeadingText from '../components/Text/HeadingText';
-import VocabModalSheet from '../components/VocabModalSheet/VocabModalSheet';
 import {Reading, Vocab} from '../types';
 
 type SavedReadingsCardWithID = Omit<Reading, 'relevantVoccabs' | 'audioURL'>;
@@ -78,7 +77,7 @@ const HomeScreen = ({
   return (
     <SafeAreaView style={styles.safeArea}>
       <StatusBar barStyle={'dark-content'} />
-      <VocabModalSheet />
+
       <View style={styles.view}>
         <View>
           <View style={styles.greetingContainer}>
