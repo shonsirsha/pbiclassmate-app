@@ -21,12 +21,14 @@ import SavedReadingsScreen from './screens/SavedReadingsScreen';
 import SavedVocabScreen from './screens/SavedVocabScreen';
 import VocabModalSheet from './components/VocabModalSheet/VocabModalSheet';
 import NavigationWrapper from './components/NavigationWrapper/NavigationWrapper';
+import ReadingPlayerScreen from './screens/ReadingPlayerScreen';
 
 export type RootStackParamList = {
   HomeScreen: undefined;
   QRCodeScannerScreen: undefined;
   SavedReadingsScreen: undefined;
   SavedVocabScreen: undefined;
+  ReadingPlayerScreen: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -83,6 +85,16 @@ function App(): JSX.Element {
                 <Stack.Screen
                   name="SavedVocabScreen"
                   component={SavedVocabScreen}
+                />
+              </Stack.Group>
+              <Stack.Group
+                screenOptions={{
+                  headerShown: false,
+                  presentation: 'fullScreenModal',
+                }}>
+                <Stack.Screen
+                  name="ReadingPlayerScreen"
+                  component={ReadingPlayerScreen}
                 />
               </Stack.Group>
             </Stack.Navigator>

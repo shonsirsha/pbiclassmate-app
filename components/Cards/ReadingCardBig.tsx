@@ -3,13 +3,16 @@ import {StyleSheet, TouchableOpacity} from 'react-native';
 import {Reading} from '../../types';
 import BodyText from '../Text/BodyText';
 
-const ReadingCardBig = ({
-  title,
-  color,
-  detail,
-}: Omit<Reading, 'audioURL' | 'relevantVoccabs' | 'id'>) => {
+type TReadingCardProp = Omit<Reading, 'audioURL' | 'relevantVoccabs' | 'id'> & {
+  onPress: () => void;
+};
+
+const ReadingCardBig = ({title, color, detail, onPress}: TReadingCardProp) => {
   return (
-    <TouchableOpacity style={styles({color}).card} activeOpacity={0.55}>
+    <TouchableOpacity
+      style={styles({color}).card}
+      activeOpacity={0.55}
+      onPress={onPress}>
       <BodyText>{title}</BodyText>
       <BodyText fontLight style={styles().detailText}>
         {detail}

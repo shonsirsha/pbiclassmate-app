@@ -8,9 +8,14 @@ import HeadingText from '../Text/HeadingText';
 type TProps = {
   savedReadings: Omit<Reading, 'relevantVoccabs' | 'audioURL'>[];
   onPressGoToSavedReadings: () => void;
+  onPressCard: () => void;
 };
 
-const SavedReadings = ({savedReadings, onPressGoToSavedReadings}: TProps) => {
+const SavedReadings = ({
+  savedReadings,
+  onPressGoToSavedReadings,
+  onPressCard,
+}: TProps) => {
   return (
     <View style={styles.savedReadingsContainer}>
       <HeadingText style={styles.savedReadingsHeader}>
@@ -23,6 +28,7 @@ const SavedReadings = ({savedReadings, onPressGoToSavedReadings}: TProps) => {
         {savedReadings.map(reading => (
           <View key={reading.id} style={styles.readingCardContainer}>
             <ReadingCardBig
+              onPress={onPressCard}
               title={reading.title}
               detail={reading.detail}
               color={reading.color}

@@ -74,6 +74,10 @@ const HomeScreen = ({
   const handlePressGoToSavedVocab = () => {
     navigation.navigate('SavedVocabScreen');
   };
+
+  const handlePressCard = () => {
+    navigation.navigate('ReadingPlayerScreen');
+  };
   return (
     <SafeAreaView style={styles.safeArea}>
       <StatusBar barStyle={'dark-content'} />
@@ -88,6 +92,7 @@ const HomeScreen = ({
           </View>
           <SavedReadings
             savedReadings={savedReadings}
+            onPressCard={handlePressCard}
             onPressGoToSavedReadings={handlePressGoToSavedReadings}
           />
           <SavedVocab
