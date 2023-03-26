@@ -93,7 +93,6 @@ function App(): JSX.Element {
               <Stack.Group
                 screenOptions={{
                   headerShown: false,
-                  presentation: 'fullScreenModal',
                 }}>
                 <Stack.Screen
                   name="ReadingPlayerScreen"
