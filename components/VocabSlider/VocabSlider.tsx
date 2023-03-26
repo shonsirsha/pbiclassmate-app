@@ -5,23 +5,23 @@ import LinkButton from '../Buttons/LinkButton';
 import VoccabCardSmall from '../Cards/VocabCardSmall';
 import HeadingText from '../Text/HeadingText';
 
-const SavedVocab = ({
-  savedVocabs,
+const VocabSlider = ({
+  title,
+  vocabs,
   onPressGoToSavedVocab,
 }: {
-  savedVocabs: Vocab[];
+  title: string;
+  vocabs: Vocab[];
   onPressGoToSavedVocab: () => void;
 }) => {
   return (
     <View style={styles.savedReadingsContainer}>
-      <HeadingText style={styles.savedReadingsHeader}>
-        Saved vocabulary
-      </HeadingText>
+      <HeadingText style={styles.savedReadingsHeader}>{title}</HeadingText>
       <ScrollView
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={styles.savedReadingsScrollViewContentContainer}
         horizontal>
-        {savedVocabs.map(vocab => (
+        {vocabs.map(vocab => (
           <View key={vocab.id} style={styles.readingCardContainer}>
             <VoccabCardSmall vocab={vocab} />
           </View>
@@ -55,4 +55,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SavedVocab;
+export default VocabSlider;

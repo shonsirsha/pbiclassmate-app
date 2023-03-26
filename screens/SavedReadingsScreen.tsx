@@ -10,8 +10,11 @@ import {MOCKED_SAVED_READING} from './HomeScreen';
 const SavedReadingsScreen = ({
   navigation,
 }: NativeStackScreenProps<RootStackParamList, 'SavedReadingsScreen'>) => {
-  const handlePress = () => {
-    navigation.navigate('ReadingPlayerScreen');
+  const handlePress = (title: string, detail: string) => {
+    navigation.navigate('ReadingPlayerScreen', {
+      title,
+      detail,
+    });
   };
   return (
     <SafeAreaView>

@@ -28,7 +28,10 @@ export type RootStackParamList = {
   QRCodeScannerScreen: undefined;
   SavedReadingsScreen: undefined;
   SavedVocabScreen: undefined;
-  ReadingPlayerScreen: undefined;
+  ReadingPlayerScreen: {
+    title: string;
+    detail: string;
+  };
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();

@@ -8,7 +8,7 @@ import HeadingText from '../Text/HeadingText';
 type TProps = {
   savedReadings: Omit<Reading, 'relevantVoccabs' | 'audioURL'>[];
   onPressGoToSavedReadings: () => void;
-  onPressCard: () => void;
+  onPressCard: (title: string, detail: string) => void;
 };
 
 const SavedReadings = ({

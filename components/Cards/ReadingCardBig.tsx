@@ -4,7 +4,7 @@ import {Reading} from '../../types';
 import BodyText from '../Text/BodyText';
 
 type TReadingCardProp = Omit<Reading, 'audioURL' | 'relevantVoccabs' | 'id'> & {
-  onPress: () => void;
+  onPress: (title: string, detail: string) => void;
 };
 
 const ReadingCardBig = ({title, color, detail, onPress}: TReadingCardProp) => {
@@ -12,7 +12,7 @@ const ReadingCardBig = ({title, color, detail, onPress}: TReadingCardProp) => {
     <TouchableOpacity
       style={styles({color}).card}
       activeOpacity={0.55}
-      onPress={onPress}>
+      onPress={() => onPress(title, detail)}>
       <BodyText>{title}</BodyText>
       <BodyText fontLight style={styles().detailText}>
         {detail}

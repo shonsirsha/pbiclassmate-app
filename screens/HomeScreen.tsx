@@ -11,7 +11,7 @@ import {SafeAreaView, StatusBar, StyleSheet, View} from 'react-native';
 import {RootStackParamList} from '../App';
 import QRCodeButton from '../components/Buttons/QRCodeButton';
 import SavedReadings from '../components/SavedReadings/SavedReadings';
-import SavedVocab from '../components/SavedVocab/SavedVocab';
+import VocabSlider from '../components/VocabSlider/VocabSlider';
 import BodyText from '../components/Text/BodyText';
 import HeadingText from '../components/Text/HeadingText';
 import {Reading, Vocab} from '../types';
@@ -75,8 +75,11 @@ const HomeScreen = ({
     navigation.navigate('SavedVocabScreen');
   };
 
-  const handlePressCard = () => {
-    navigation.navigate('ReadingPlayerScreen');
+  const handlePressCard = (title: string, detail: string) => {
+    navigation.navigate('ReadingPlayerScreen', {
+      title,
+      detail,
+    });
   };
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -95,8 +98,9 @@ const HomeScreen = ({
             onPressCard={handlePressCard}
             onPressGoToSavedReadings={handlePressGoToSavedReadings}
           />
-          <SavedVocab
-            savedVocabs={savedVocabs}
+          <VocabSlider
+            title={'Saved vocabulary'}
+            vocabs={savedVocabs}
             onPressGoToSavedVocab={handlePressGoToSavedVocab}
           />
         </View>

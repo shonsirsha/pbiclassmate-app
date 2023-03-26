@@ -7,7 +7,7 @@ type TReadingCardSmall = Omit<
   Reading,
   'audioURL' | 'relevantVoccabs' | 'id' | 'detail'
 > & {
-  onPress: () => void;
+  onPress: (title: string, detail: string) => void;
 };
 
 const ReadingCardSmall = ({title, color, onPress}: TReadingCardSmall) => {
@@ -15,7 +15,7 @@ const ReadingCardSmall = ({title, color, onPress}: TReadingCardSmall) => {
     <TouchableOpacity
       style={styles({color}).card}
       activeOpacity={0.55}
-      onPress={onPress}>
+      onPress={() => onPress(title, '')}>
       <BodyText>{title}</BodyText>
     </TouchableOpacity>
   );
