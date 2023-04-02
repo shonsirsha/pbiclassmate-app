@@ -14,6 +14,7 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		B57DFCC629B4AF6300996D24 /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = B57DFCC529B4AF6200996D24 /* Fonts */; };
+		B59B068729D81D9500503BA7 /* dummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59B068629D81D9500503BA7 /* dummy.swift */; };
 		DF37A0A849B08EC1C5760CBE /* libPods-PBIClassmate.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A49DE4DEA8BD1E985C80FDF /* libPods-PBIClassmate.a */; };
 /* End PBXBuildFile section */
 
@@ -44,6 +45,8 @@
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = PBIClassmate/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A1F3473332530CDC4C606556 /* Pods-PBIClassmate-PBIClassmateTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PBIClassmate-PBIClassmateTests.release.xcconfig"; path = "Target Support Files/Pods-PBIClassmate-PBIClassmateTests/Pods-PBIClassmate-PBIClassmateTests.release.xcconfig"; sourceTree = "<group>"; };
 		B57DFCC529B4AF6200996D24 /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Fonts; path = "../node_modules/react-native-vector-icons/Fonts"; sourceTree = "<group>"; };
+		B59B068529D81D9400503BA7 /* PBIClassmate-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PBIClassmate-Bridging-Header.h"; sourceTree = "<group>"; };
+		B59B068629D81D9500503BA7 /* dummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dummy.swift; sourceTree = "<group>"; };
 		D060C7664376F1A9EBFFD94C /* libPods-PBIClassmate-PBIClassmateTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PBIClassmate-PBIClassmateTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -94,6 +97,8 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
+				B59B068629D81D9500503BA7 /* dummy.swift */,
+				B59B068529D81D9400503BA7 /* PBIClassmate-Bridging-Header.h */,
 			);
 			name = PBIClassmate;
 			sourceTree = "<group>";
@@ -210,7 +215,7 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						LastSwiftMigration = 1120;
+						LastSwiftMigration = 1420;
 					};
 				};
 			};
@@ -417,6 +422,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */,
+				B59B068729D81D9500503BA7 /* dummy.swift in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -436,6 +442,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7CFF63B3A3F12B2605320F1A /* Pods-PBIClassmate-PBIClassmateTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = Q33X652UWU;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -464,6 +471,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = A1F3473332530CDC4C606556 /* Pods-PBIClassmate-PBIClassmateTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
 				DEVELOPMENT_TEAM = Q33X652UWU;
@@ -507,6 +515,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "seansaoirse.puribahasa.com.--PRODUCT-NAME-rfc1034identifier-";
 				PRODUCT_NAME = PBIClassmate;
+				SWIFT_OBJC_BRIDGING_HEADER = "PBIClassmate-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -534,6 +543,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "seansaoirse.puribahasa.com.--PRODUCT-NAME-rfc1034identifier-";
 				PRODUCT_NAME = PBIClassmate;
+				SWIFT_OBJC_BRIDGING_HEADER = "PBIClassmate-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};

@@ -15,8 +15,14 @@ import VocabSlider from '../components/VocabSlider/VocabSlider';
 import BodyText from '../components/Text/BodyText';
 import HeadingText from '../components/Text/HeadingText';
 import {Reading, Vocab} from '../types';
+import {Track, TrackType} from 'react-native-track-player';
 
-type SavedReadingsCardWithID = Omit<Reading, 'relevantVoccabs' | 'audioURL'>;
+export type SavedReadingsCardWithID = Omit<
+  Reading,
+  'relevantVoccabs' | 'audioURL'
+> & {
+  track: Track;
+};
 
 export const MOCKED_SAVED_READING: SavedReadingsCardWithID[] = [
   {
@@ -24,24 +30,49 @@ export const MOCKED_SAVED_READING: SavedReadingsCardWithID[] = [
     title: 'Peter Pesan Kamar Hotel',
     color: '#FAE9DF',
     detail: 'A1 - Pelajaran 3',
+    track: {
+      url: 'https://audio-previews.elements.envatousercontent.com/files/103682271/preview.mp3',
+      type: TrackType.Default,
+      title: 'Peter Pesan Kamar Hotel',
+      artwork: 'https://picsum.photos/52',
+    },
   },
   {
     id: '1234',
     title: 'Ke Rumah Sakit',
     color: '#E9F7FA',
     detail: 'A1 - Pelajaran 3',
+    track: {
+      url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
+      type: TrackType.Default,
+      title: 'Ke Rumah Sakit',
+      artwork: 'https://picsum.photos/100',
+    },
   },
+
   {
     id: '1233214',
     title: 'Kebakaran di Pasar',
     color: '#9CFCA8',
     detail: 'A1 - Pelajaran 1',
+    track: {
+      url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3',
+      type: TrackType.Default,
+      title: 'Kebakaran di Pasar',
+      artwork: 'https://picsum.photos/69',
+    },
   },
   {
     id: '12334',
     title: 'Puasa Tahun 2023',
     color: '#F7E7FF',
     detail: 'A1 - Pelajaran 1',
+    track: {
+      url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3',
+      type: TrackType.Default,
+      title: 'Puasa Tahun 2023',
+      artwork: 'https://picsum.photos/101',
+    },
   },
 ];
 
@@ -75,10 +106,11 @@ const HomeScreen = ({
     navigation.navigate('SavedVocabScreen');
   };
 
-  const handlePressCard = (title: string, detail: string) => {
+  const handlePressCard = (title: string, detail: string, track: Track) => {
     navigation.navigate('ReadingPlayerScreen', {
       title,
       detail,
+      track,
     });
   };
   return (
