@@ -1,13 +1,21 @@
+import Slider from '@react-native-community/slider';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React, {useEffect, useState} from 'react';
 import {View, SafeAreaView, StyleSheet} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import TrackPlayer, {State, Track, TrackType} from 'react-native-track-player';
+import TrackPlayer, {
+  RepeatMode,
+  State,
+  Track,
+  TrackType,
+  useProgress,
+} from 'react-native-track-player';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {RootStackParamList} from '../App';
 import BodyText from '../components/Text/BodyText';
 import HeadingText from '../components/Text/HeadingText';
 import VocabSlider from '../components/VocabSlider/VocabSlider';
+import {COLORS} from '../constants/COLORS';
 import {MOCKED_SAVED_VOCABS} from './HomeScreen';
 
 const FavouriteButton = ({
@@ -30,10 +38,8 @@ const ReadingPlayerScreen = ({
   const {title, detail, track} = route.params;
   const [currentlyPlaying, setCurrentlyPlaying] = useState<Track | null>();
   const [favourite, setFavourite] = useState(false);
-  const [isPlaying, setIsPlaying] = useState(
-    // State.Playing && currentlyPlaying && currentlyPlaying.url === track.url,
-    false,
-  );
+  const [isPlaying, setIsPlaying] = useState(false);
+  const progress = useProgress(250);
 
   useEffect(() => {
     const addToTrack = async () => {
@@ -55,6 +61,14 @@ const ReadingPlayerScreen = ({
     };
     getIsPlaying();
   }, [track.url]);
+
+  useEffect(() => {
+    if (track.duration) {
+      if (progress.position > track.duration) {
+        setIsPlaying(false);
+      }
+    }
+  }, [progress.position, track]);
 
   const getCurrentlyPlaying = async () => {
     const currentTrackId = await TrackPlayer.getCurrentTrack();
@@ -85,6 +99,7 @@ const ReadingPlayerScreen = ({
         artwork: track.artwork,
       });
       await TrackPlayer.play();
+      await TrackPlayer.setRepeatMode(RepeatMode.Off);
       setIsPlaying(true);
     } else {
       if (!isPlaying) {
@@ -97,6 +112,7 @@ const ReadingPlayerScreen = ({
           artwork: track.artwork,
         });
         await TrackPlayer.play();
+        await TrackPlayer.setRepeatMode(RepeatMode.Off);
       } else {
         // pausing
         await TrackPlayer.pause();
@@ -104,6 +120,7 @@ const ReadingPlayerScreen = ({
       setIsPlaying(!isPlaying);
     }
   };
+
   return (
     <SafeAreaView>
       <View style={styles.outerContainer}>
@@ -115,10 +132,28 @@ const ReadingPlayerScreen = ({
         </View>
         <View style={styles.titleContainer}>
           <HeadingText>{title}</HeadingText>
-          <BodyText style={styles.detailText}>{detail}</BodyText>
-
-          <TouchableOpacity onPress={handlePlay}>
-            <BodyText>{isPlaying ? 'Pause' : 'Play'}</BodyText>
+          <BodyText style={styles.detailText}>
+            {detail} {progress.position}
+          </BodyText>
+          <Slider
+            style={styles.slider}
+            minimumValue={0}
+            maximumValue={track.duration}
+            minimumTrackTintColor={COLORS.primary}
+            maximumTrackTintColor="#52527a"
+            thumbTintColor={COLORS.primary}
+            value={progress.position}
+            onSlidingComplete={value => {
+              TrackPlayer.seekTo(value);
+            }}
+            onValueChange={e => console.warn(e)}
+          />
+          <TouchableOpacity style={styles.playButton} onPress={handlePlay}>
+            <Icon
+              name={isPlaying ? 'pause' : 'play'}
+              size={32}
+              style={styles.playButtonIcon}
+            />
           </TouchableOpacity>
         </View>
       </View>
@@ -126,6 +161,7 @@ const ReadingPlayerScreen = ({
         title="Relevant Vocabularies"
         vocabs={MOCKED_SAVED_VOCABS}
         onPressGoToSavedVocab={() => {}}
+        showSavedVocabLink={false}
       />
     </SafeAreaView>
   );
@@ -146,6 +182,26 @@ const styles = StyleSheet.create({
   detailText: {
     marginTop: 8,
     color: '#A3A3A3',
+  },
+  playButton: {
+    backgroundColor: COLORS.primary,
+    width: 84,
+    height: 84,
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 24,
+  },
+  playButtonIcon: {
+    color: '#fff',
+  },
+  slider: {
+    width: '100%',
+    height: 32,
+    marginVertical: 32,
+    marginBottom: 16,
   },
 });
 

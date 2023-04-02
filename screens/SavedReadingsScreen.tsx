@@ -6,14 +6,16 @@ import {RootStackParamList} from '../App';
 import ReadingCardSmall from '../components/Cards/ReadingCardSmall';
 import Header from '../components/Header/Header';
 import {MOCKED_SAVED_READING} from './HomeScreen';
+import {Track} from 'react-native-track-player';
 
 const SavedReadingsScreen = ({
   navigation,
 }: NativeStackScreenProps<RootStackParamList, 'SavedReadingsScreen'>) => {
-  const handlePress = (title: string, detail: string) => {
+  const handlePress = (title: string, detail: string, track: Track) => {
     navigation.navigate('ReadingPlayerScreen', {
       title,
       detail,
+      track,
     });
   };
   return (
@@ -27,6 +29,9 @@ const SavedReadingsScreen = ({
                 title={reading.title}
                 color={reading.color}
                 onPress={handlePress}
+                id={reading.id}
+                detail={''}
+                track={reading.track}
               />
             </View>
           ))}

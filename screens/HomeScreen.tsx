@@ -35,6 +35,7 @@ export const MOCKED_SAVED_READING: SavedReadingsCardWithID[] = [
       type: TrackType.Default,
       title: 'Peter Pesan Kamar Hotel',
       artwork: 'https://picsum.photos/52',
+      duration: 505.88,
     },
   },
   {
@@ -47,6 +48,7 @@ export const MOCKED_SAVED_READING: SavedReadingsCardWithID[] = [
       type: TrackType.Default,
       title: 'Ke Rumah Sakit',
       artwork: 'https://picsum.photos/100',
+      duration: 372,
     },
   },
 
@@ -60,6 +62,7 @@ export const MOCKED_SAVED_READING: SavedReadingsCardWithID[] = [
       type: TrackType.Default,
       title: 'Kebakaran di Pasar',
       artwork: 'https://picsum.photos/69',
+      duration: 425,
     },
   },
   {
@@ -72,6 +75,7 @@ export const MOCKED_SAVED_READING: SavedReadingsCardWithID[] = [
       type: TrackType.Default,
       title: 'Puasa Tahun 2023',
       artwork: 'https://picsum.photos/101',
+      duration: 344,
     },
   },
 ];

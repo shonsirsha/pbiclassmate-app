@@ -1,21 +1,24 @@
 import React from 'react';
 import {StyleSheet, TouchableOpacity} from 'react-native';
-import {Reading} from '../../types';
+import {Track} from 'react-native-track-player';
+import {SavedReadingsCardWithID} from '../../screens/HomeScreen';
 import BodyText from '../Text/BodyText';
 
-type TReadingCardSmall = Omit<
-  Reading,
-  'audioURL' | 'relevantVoccabs' | 'id' | 'detail'
-> & {
-  onPress: (title: string, detail: string) => void;
+type TReadingCardSmall = SavedReadingsCardWithID & {
+  onPress: (title: string, detail: string, track: Track) => void;
 };
 
-const ReadingCardSmall = ({title, color, onPress}: TReadingCardSmall) => {
+const ReadingCardSmall = ({
+  title,
+  color,
+  onPress,
+  track,
+}: TReadingCardSmall) => {
   return (
     <TouchableOpacity
       style={styles({color}).card}
       activeOpacity={0.55}
-      onPress={() => onPress(title, '')}>
+      onPress={() => onPress(title, '', track)}>
       <BodyText>{title}</BodyText>
     </TouchableOpacity>
   );

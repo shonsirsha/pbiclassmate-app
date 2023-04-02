@@ -51,6 +51,7 @@ function App(): JSX.Element {
   useEffect(() => {
     const startPlayer = async () => {
       const isInit = await trackPlayerInit();
+      TrackPlayer;
       TrackPlayer.updateOptions({
         capabilities: [
           Capability.Play,

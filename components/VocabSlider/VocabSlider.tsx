@@ -9,10 +9,12 @@ const VocabSlider = ({
   title,
   vocabs,
   onPressGoToSavedVocab,
+  showSavedVocabLink = true,
 }: {
   title: string;
   vocabs: Vocab[];
   onPressGoToSavedVocab: () => void;
+  showSavedVocabLink?: boolean;
 }) => {
   return (
     <View style={styles.savedReadingsContainer}>
@@ -27,11 +29,13 @@ const VocabSlider = ({
           </View>
         ))}
       </ScrollView>
-      <View style={styles.linkButtonCotnainer}>
-        <LinkButton onPress={onPressGoToSavedVocab}>
-          See all saved vocabulary
-        </LinkButton>
-      </View>
+      {showSavedVocabLink && (
+        <View style={styles.linkButtonCotnainer}>
+          <LinkButton onPress={onPressGoToSavedVocab}>
+            See all saved vocabulary
+          </LinkButton>
+        </View>
+      )}
     </View>
   );
 };
