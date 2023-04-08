@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {BottomSheetModal, BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 import {StyleSheet, View} from 'react-native';
 import {VocabModalSheetContext} from '../../context/VocabModalSheetContext';
@@ -6,12 +6,12 @@ import FavouriteButton from '../Buttons/FavouriteButton.';
 import BodyText from '../Text/BodyText';
 import HeadingText from '../Text/HeadingText';
 import {ASYNC_STORAGE_UTILS} from '../../utils';
+import {AsyncStorageContext} from '../../context/AsyncStorageContext';
 
 const VocabModalSheet = () => {
   const {readData} = ASYNC_STORAGE_UTILS;
-  const {toggleFavorite, setFavorite, favorite, allSavedVocab} = useContext(
-    VocabModalSheetContext,
-  );
+  const [favorite, setFavorite] = useState(false);
+  const {saveVocab, allSavedVocab} = useContext(AsyncStorageContext);
   const {vocab, bottomSheetModalRef, closeVocab} = useContext(
     VocabModalSheetContext,
   );
@@ -44,7 +44,10 @@ const VocabModalSheet = () => {
   };
 
   const handleFavourite = async () => {
-    toggleFavorite();
+    if (vocab) {
+      setFavorite(!favorite);
+      saveVocab(vocab, !favorite);
+    }
   };
 
   return (

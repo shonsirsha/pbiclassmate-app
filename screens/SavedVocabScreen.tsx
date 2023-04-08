@@ -6,13 +6,12 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {RootStackParamList} from '../App';
 import VocabCardSmall from '../components/Cards/VocabCardSmall';
 import Header from '../components/Header/Header';
-import {VocabModalSheetContext} from '../context/VocabModalSheetContext';
+import {AsyncStorageContext} from '../context/AsyncStorageContext';
 
 const SavedVocabScreen = ({
   navigation,
 }: NativeStackScreenProps<RootStackParamList, 'SavedVocabScreen'>) => {
-  const {allSavedVocab} = useContext(VocabModalSheetContext);
-
+  const {allSavedVocab} = useContext(AsyncStorageContext);
   return (
     <SafeAreaView>
       <View style={styles.view}>
