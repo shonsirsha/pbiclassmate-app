@@ -1,16 +1,18 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import React from 'react';
+import React, {useContext} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {RootStackParamList} from '../App';
 import VocabCardSmall from '../components/Cards/VocabCardSmall';
 import Header from '../components/Header/Header';
-import {MOCKED_SAVED_VOCABS} from './HomeScreen';
+import {VocabModalSheetContext} from '../context/VocabModalSheetContext';
 
 const SavedVocabScreen = ({
   navigation,
 }: NativeStackScreenProps<RootStackParamList, 'SavedVocabScreen'>) => {
+  const {allSavedVocab} = useContext(VocabModalSheetContext);
+
   return (
     <SafeAreaView>
       <View style={styles.view}>
@@ -19,14 +21,17 @@ const SavedVocabScreen = ({
           withBackButton
           navigation={navigation}
         />
-
         <ScrollView style={styles.scrollView}>
           <View style={styles.vocabsContainer}>
-            {MOCKED_SAVED_VOCABS.map(vocab => (
-              <View style={styles.vocabCardInnerContainer} key={vocab.id}>
-                <VocabCardSmall vocab={vocab} />
-              </View>
-            ))}
+            {allSavedVocab ? (
+              <>
+                {allSavedVocab.map(vocab => (
+                  <View style={styles.vocabCardInnerContainer} key={vocab.id}>
+                    <VocabCardSmall vocab={vocab} />
+                  </View>
+                ))}
+              </>
+            ) : null}
           </View>
         </ScrollView>
       </View>

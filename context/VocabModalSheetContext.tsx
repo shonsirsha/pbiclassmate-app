@@ -1,5 +1,5 @@
 import {BottomSheetModalMethods} from '@gorhom/bottom-sheet/lib/typescript/types';
-import {createContext} from 'react';
+import {createContext, Dispatch} from 'react';
 import {Vocab} from '../types';
 
 type ModalSheetContextType = {
@@ -7,6 +7,10 @@ type ModalSheetContextType = {
   displayVocab: (passedVocab: Vocab) => void;
   bottomSheetModalRef: React.RefObject<BottomSheetModalMethods>;
   closeVocab: () => void;
+  toggleFavorite: () => void;
+  setFavorite: Dispatch<React.SetStateAction<boolean>>;
+  favorite: boolean;
+  allSavedVocab: Vocab[] | null;
 };
 
 export const VocabModalSheetContext = createContext<ModalSheetContextType>(

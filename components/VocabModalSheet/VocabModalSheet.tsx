@@ -1,16 +1,41 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {BottomSheetModal, BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 import {StyleSheet, View} from 'react-native';
 import {VocabModalSheetContext} from '../../context/VocabModalSheetContext';
 import FavouriteButton from '../Buttons/FavouriteButton.';
 import BodyText from '../Text/BodyText';
 import HeadingText from '../Text/HeadingText';
+import {ASYNC_STORAGE_UTILS} from '../../utils';
 
 const VocabModalSheet = () => {
-  const [favourite, setFavourite] = useState(false);
+  const {readData} = ASYNC_STORAGE_UTILS;
+  const {toggleFavorite, setFavorite, favorite, allSavedVocab} = useContext(
+    VocabModalSheetContext,
+  );
   const {vocab, bottomSheetModalRef, closeVocab} = useContext(
     VocabModalSheetContext,
   );
+  const storageKey = 'vocab';
+
+  useEffect(() => {
+    if (vocab) {
+      const setIsFavourite = async () => {
+        try {
+          if (allSavedVocab) {
+            const isSaved =
+              allSavedVocab.findIndex(v => v.id === vocab.id) >= 0;
+            setFavorite(isSaved);
+          } else {
+            setFavorite(false);
+          }
+        } catch (e) {
+          console.error(e);
+        }
+      };
+
+      setIsFavourite();
+    }
+  }, [allSavedVocab, readData, setFavorite, storageKey, vocab]);
 
   const handleOnChange = (index: number) => {
     if (index === -1) {
@@ -18,8 +43,8 @@ const VocabModalSheet = () => {
     }
   };
 
-  const handleFavourite = () => {
-    setFavourite(!favourite);
+  const handleFavourite = async () => {
+    toggleFavorite();
   };
 
   return (
@@ -38,7 +63,7 @@ const VocabModalSheet = () => {
             <HeadingText style={styles.indonesian}>
               {vocab?.nameIndonesian}
             </HeadingText>
-            <FavouriteButton onPress={handleFavourite} favourite={favourite} />
+            <FavouriteButton onPress={handleFavourite} favourite={favorite} />
           </View>
           <BodyText fontLight style={styles.english}>
             {vocab?.nameEnglish}
