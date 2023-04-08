@@ -117,6 +117,13 @@ const HomeScreen = ({
       track,
     });
   };
+  const dateNow = Date.now();
+  const dayName = new Intl.DateTimeFormat('en-US', {weekday: 'long'}).format(
+    new Date(dateNow),
+  );
+  const date = new Date(dateNow).getDate();
+  const month = new Date(dateNow).toLocaleString('default', {month: 'long'});
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <StatusBar barStyle={'dark-content'} />
@@ -126,7 +133,7 @@ const HomeScreen = ({
           <View style={styles.greetingContainer}>
             <HeadingText>Hi there!</HeadingText>
             <BodyText style={styles.date} fontLight>
-              Saturday, 04 March
+              {dayName}, {date} {month}
             </BodyText>
           </View>
           <SavedReadings

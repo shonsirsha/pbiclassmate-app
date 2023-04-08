@@ -1,11 +1,13 @@
+import React, {useContext, useState} from 'react';
 import {BottomSheetModal, BottomSheetModalProvider} from '@gorhom/bottom-sheet';
-import React, {useContext} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {VocabModalSheetContext} from '../../context/VocabModalSheetContext';
+import FavouriteButton from '../Buttons/FavouriteButton.';
 import BodyText from '../Text/BodyText';
 import HeadingText from '../Text/HeadingText';
 
 const VocabModalSheet = () => {
+  const [favourite, setFavourite] = useState(false);
   const {vocab, bottomSheetModalRef, closeVocab} = useContext(
     VocabModalSheetContext,
   );
@@ -14,6 +16,10 @@ const VocabModalSheet = () => {
     if (index === -1) {
       closeVocab();
     }
+  };
+
+  const handleFavourite = () => {
+    setFavourite(!favourite);
   };
 
   return (
@@ -28,9 +34,12 @@ const VocabModalSheet = () => {
         backgroundStyle={styles.background}
         onChange={handleOnChange}>
         <View style={styles.contentContainer}>
-          <HeadingText style={styles.indonesian}>
-            {vocab?.nameIndonesian}
-          </HeadingText>
+          <View style={styles.headingContainer}>
+            <HeadingText style={styles.indonesian}>
+              {vocab?.nameIndonesian}
+            </HeadingText>
+            <FavouriteButton onPress={handleFavourite} favourite={favourite} />
+          </View>
           <BodyText fontLight style={styles.english}>
             {vocab?.nameEnglish}
           </BodyText>
@@ -46,6 +55,12 @@ const styles = StyleSheet.create({
     paddingVertical: 32,
     paddingHorizontal: 24,
     alignItems: 'flex-start',
+  },
+  headingContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: '100%',
   },
   indonesian: {
     fontSize: 28,

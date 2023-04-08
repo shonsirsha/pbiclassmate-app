@@ -1,7 +1,7 @@
+import React, {useEffect, useState} from 'react';
 import Slider from '@react-native-community/slider';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import React, {useEffect, useState} from 'react';
-import {View, SafeAreaView, StyleSheet} from 'react-native';
+import {View, SafeAreaView, StyleSheet, Image} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import TrackPlayer, {
   RepeatMode,
@@ -16,21 +16,10 @@ import BodyText from '../components/Text/BodyText';
 import HeadingText from '../components/Text/HeadingText';
 import VocabSlider from '../components/VocabSlider/VocabSlider';
 import {COLORS} from '../constants/COLORS';
+import {secondsToHHMMSS} from '../utils';
 import {MOCKED_SAVED_VOCABS} from './HomeScreen';
+import FavouriteButton from '../components/Buttons/FavouriteButton.';
 
-const FavouriteButton = ({
-  favourite,
-  onPress,
-}: {
-  favourite: boolean;
-  onPress: () => void;
-}) => {
-  return (
-    <TouchableOpacity onPress={onPress}>
-      <Icon size={24} name={favourite ? 'star' : 'star-o'} />
-    </TouchableOpacity>
-  );
-};
 const ReadingPlayerScreen = ({
   navigation,
   route,
@@ -40,6 +29,10 @@ const ReadingPlayerScreen = ({
   const [favourite, setFavourite] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const progress = useProgress(250);
+
+  const currentlyPlayingIsCurrentlyOpened = currentlyPlaying
+    ? currentlyPlaying.url === track.url
+    : false;
 
   useEffect(() => {
     const addToTrack = async () => {
@@ -131,10 +124,14 @@ const ReadingPlayerScreen = ({
           </TouchableOpacity>
         </View>
         <View style={styles.titleContainer}>
+          <Image
+            style={styles.artwork}
+            source={{
+              uri: track.artwork as string,
+            }}
+          />
           <HeadingText>{title}</HeadingText>
-          <BodyText style={styles.detailText}>
-            {detail} {progress.position}
-          </BodyText>
+          <BodyText style={styles.detailText}>{detail}</BodyText>
           <Slider
             style={styles.slider}
             minimumValue={0}
@@ -142,12 +139,29 @@ const ReadingPlayerScreen = ({
             minimumTrackTintColor={COLORS.primary}
             maximumTrackTintColor="#52527a"
             thumbTintColor={COLORS.primary}
-            value={progress.position}
+            value={currentlyPlayingIsCurrentlyOpened ? progress.position : 0}
             onSlidingComplete={value => {
               TrackPlayer.seekTo(value);
             }}
-            onValueChange={e => console.warn(e)}
           />
+          <View style={styles.durationsContainer}>
+            <BodyText>
+              {currentlyPlayingIsCurrentlyOpened
+                ? secondsToHHMMSS(Math.floor(progress.position))
+                : '00:00'}
+              {}
+            </BodyText>
+            <BodyText>
+              {currentlyPlayingIsCurrentlyOpened
+                ? track.duration
+                  ? secondsToHHMMSS(
+                      Math.floor(track.duration - progress.position),
+                    )
+                  : 0
+                : secondsToHHMMSS(track.duration ? track.duration : 0)}
+            </BodyText>
+          </View>
+
           <TouchableOpacity style={styles.playButton} onPress={handlePlay}>
             <Icon
               name={isPlaying ? 'pause' : 'play'}
@@ -168,6 +182,14 @@ const ReadingPlayerScreen = ({
 };
 
 const styles = StyleSheet.create({
+  artwork: {
+    width: 200,
+    height: 200,
+    borderRadius: 16,
+    marginBottom: 32,
+    marginLeft: 'auto',
+    marginRight: 'auto',
+  },
   outerContainer: {
     padding: 24,
     paddingTop: 0,
@@ -201,7 +223,11 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 32,
     marginVertical: 32,
-    marginBottom: 16,
+    marginBottom: 4,
+  },
+  durationsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
 });
 
