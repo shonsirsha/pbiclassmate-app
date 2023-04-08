@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import Slider from '@react-native-community/slider';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {View, SafeAreaView, StyleSheet, Image} from 'react-native';
@@ -19,20 +19,33 @@ import {COLORS} from '../constants/COLORS';
 import {secondsToHHMMSS} from '../utils';
 import {MOCKED_SAVED_VOCABS} from './HomeScreen';
 import FavouriteButton from '../components/Buttons/FavouriteButton.';
+import {AsyncStorageContext} from '../context/AsyncStorageContext';
+// import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const ReadingPlayerScreen = ({
   navigation,
   route,
 }: NativeStackScreenProps<RootStackParamList, 'ReadingPlayerScreen'>) => {
-  const {title, detail, track} = route.params;
+  const {reading} = route.params;
+  const {title, detail, track} = reading;
   const [currentlyPlaying, setCurrentlyPlaying] = useState<Track | null>();
-  const [favourite, setFavourite] = useState(false);
+  const [favorite, setFavorite] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
-  const progress = useProgress(250);
+  const progress = useProgress(200);
+  const {saveReading, allSavedReadings} = useContext(AsyncStorageContext);
 
   const currentlyPlayingIsCurrentlyOpened = currentlyPlaying
     ? currentlyPlaying.url === track.url
     : false;
+
+  useEffect(() => {
+    if (allSavedReadings) {
+      const isSaved = allSavedReadings.findIndex(r => r.id === reading.id) >= 0;
+      setFavorite(isSaved);
+    } else {
+      setFavorite(false);
+    }
+  }, [allSavedReadings, reading]);
 
   useEffect(() => {
     const addToTrack = async () => {
@@ -71,8 +84,12 @@ const ReadingPlayerScreen = ({
     }
     return null;
   };
-  const handlePressFavBtn = () => {
-    setFavourite(!favourite);
+  const handlePressFavBtn = async () => {
+    setFavorite(!favorite);
+    saveReading(route.params.reading, !favorite);
+
+    // await AsyncStorage.removeItem('readings');
+    // await AsyncStorage.removeItem('vocab');
   };
   const handlePressClose = () => {
     navigation.goBack();
@@ -118,7 +135,7 @@ const ReadingPlayerScreen = ({
     <SafeAreaView>
       <View style={styles.outerContainer}>
         <View style={styles.view}>
-          <FavouriteButton favourite={favourite} onPress={handlePressFavBtn} />
+          <FavouriteButton favorite={favorite} onPress={handlePressFavBtn} />
           <TouchableOpacity onPress={handlePressClose}>
             <BodyText>Close</BodyText>
           </TouchableOpacity>

@@ -1,11 +1,14 @@
 import React, {ReactNode, useCallback, useEffect, useState} from 'react';
-import {Vocab} from '../types';
+import {Reading, Vocab} from '../types';
 import {ASYNC_STORAGE_UTILS} from '../utils';
 import {AsyncStorageContext} from './AsyncStorageContext';
 
 const AsyncStroageProvider = ({children}: {children: ReactNode}) => {
   const {readData, storeData} = ASYNC_STORAGE_UTILS;
   const [allSavedVocab, setAllSavedVocab] = useState<Vocab[] | null>(null);
+  const [allSavedReadings, setAllSavedReadings] = useState<Reading[] | null>(
+    null,
+  );
 
   const getAllSavedVocab = useCallback(async () => {
     const saved = await readData<Vocab[]>('vocab');
@@ -14,9 +17,17 @@ const AsyncStroageProvider = ({children}: {children: ReactNode}) => {
     }
   }, [readData]);
 
+  const getAllReadings = useCallback(async () => {
+    const saved = await readData<Reading[]>('readings');
+    if (saved) {
+      setAllSavedReadings(saved);
+    }
+  }, [readData]);
+
   useEffect(() => {
     getAllSavedVocab();
-  }, [getAllSavedVocab]);
+    getAllReadings();
+  }, [getAllReadings, getAllSavedVocab]);
 
   const saveVocab = async (vocab: Vocab, isFavorite: boolean) => {
     if (allSavedVocab) {
@@ -26,11 +37,29 @@ const AsyncStroageProvider = ({children}: {children: ReactNode}) => {
         ? [vocab, ...allSavedVocab]
         : [...allSavedVocab].filter(v => v.id !== vocab.id);
       await storeData('vocab', newVocab);
-      await getAllSavedVocab();
+    } else {
+      await storeData('vocab', [vocab]);
+      console.warn('[vocab] saving first time..');
     }
+    await getAllSavedVocab();
   };
+
+  const saveReading = async (reading: Reading, isFavorite: boolean) => {
+    if (allSavedReadings) {
+      const newVocab = isFavorite
+        ? [reading, ...allSavedReadings]
+        : [...allSavedReadings].filter(r => r.id !== reading.id);
+      await storeData('readings', newVocab);
+    } else {
+      await storeData('readings', [reading]);
+      console.warn('[reading] saving first time..');
+    }
+    await getAllReadings();
+  };
+
   return (
-    <AsyncStorageContext.Provider value={{allSavedVocab, saveVocab}}>
+    <AsyncStorageContext.Provider
+      value={{allSavedVocab, allSavedReadings, saveVocab, saveReading}}>
       {children}
     </AsyncStorageContext.Provider>
   );

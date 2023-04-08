@@ -1,15 +1,14 @@
 import React from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
-import {Track} from 'react-native-track-player';
-import {SavedReadingsCardWithID} from '../../screens/HomeScreen';
 import LinkButton from '../Buttons/LinkButton';
 import ReadingCardBig from '../Cards/ReadingCardBig';
 import HeadingText from '../Text/HeadingText';
+import {Reading} from '../../types';
 
 type TProps = {
-  savedReadings: SavedReadingsCardWithID[];
+  savedReadings: Reading[];
   onPressGoToSavedReadings: () => void;
-  onPressCard: (title: string, detail: string, track: Track) => void;
+  onPressCard: (reading: Reading) => void;
 };
 
 const SavedReadings = ({
@@ -28,14 +27,7 @@ const SavedReadings = ({
         horizontal>
         {savedReadings.map(reading => (
           <View key={reading.id} style={styles.readingCardContainer}>
-            <ReadingCardBig
-              onPress={onPressCard}
-              title={reading.title}
-              detail={reading.detail}
-              id={reading.id}
-              track={reading.track}
-              color={reading.color}
-            />
+            <ReadingCardBig onPress={onPressCard} reading={reading} />
           </View>
         ))}
       </ScrollView>

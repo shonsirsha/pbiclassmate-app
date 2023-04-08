@@ -23,7 +23,8 @@ import SavedVocabScreen from './screens/SavedVocabScreen';
 import VocabModalSheet from './components/VocabModalSheet/VocabModalSheet';
 import NavigationWrapper from './components/NavigationWrapper/NavigationWrapper';
 import ReadingPlayerScreen from './screens/ReadingPlayerScreen';
-import TrackPlayer, {Capability, Track} from 'react-native-track-player';
+import TrackPlayer, {Capability} from 'react-native-track-player';
+import {Reading} from './types';
 
 const trackPlayerInit = async () => {
   await TrackPlayer.setupPlayer();
@@ -36,9 +37,7 @@ export type RootStackParamList = {
   SavedReadingsScreen: undefined;
   SavedVocabScreen: undefined;
   ReadingPlayerScreen: {
-    title: string;
-    detail: string;
-    track: Track;
+    reading: Reading;
   };
 };
 

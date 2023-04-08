@@ -19,21 +19,12 @@ const VocabModalSheet = () => {
 
   useEffect(() => {
     if (vocab) {
-      const setIsFavourite = async () => {
-        try {
-          if (allSavedVocab) {
-            const isSaved =
-              allSavedVocab.findIndex(v => v.id === vocab.id) >= 0;
-            setFavorite(isSaved);
-          } else {
-            setFavorite(false);
-          }
-        } catch (e) {
-          console.error(e);
-        }
-      };
-
-      setIsFavourite();
+      if (allSavedVocab) {
+        const isSaved = allSavedVocab.findIndex(v => v.id === vocab.id) >= 0;
+        setFavorite(isSaved);
+      } else {
+        setFavorite(false);
+      }
     }
   }, [allSavedVocab, readData, setFavorite, storageKey, vocab]);
 
@@ -66,7 +57,7 @@ const VocabModalSheet = () => {
             <HeadingText style={styles.indonesian}>
               {vocab?.nameIndonesian}
             </HeadingText>
-            <FavouriteButton onPress={handleFavourite} favourite={favorite} />
+            <FavouriteButton onPress={handleFavourite} favorite={favorite} />
           </View>
           <BodyText fontLight style={styles.english}>
             {vocab?.nameEnglish}

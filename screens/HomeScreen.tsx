@@ -15,16 +15,16 @@ import VocabSlider from '../components/VocabSlider/VocabSlider';
 import BodyText from '../components/Text/BodyText';
 import HeadingText from '../components/Text/HeadingText';
 import {Reading, Vocab} from '../types';
-import {Track, TrackType} from 'react-native-track-player';
+import {TrackType} from 'react-native-track-player';
 
-export type SavedReadingsCardWithID = Omit<
-  Reading,
-  'relevantVoccabs' | 'audioURL'
-> & {
-  track: Track;
-};
+export const MOCKED_SAVED_VOCABS: Vocab[] = [
+  {id: '1', nameIndonesian: 'Tertawa', nameEnglish: 'Laugh', audioURL: ''},
+  {id: '2', nameIndonesian: 'Lelah', nameEnglish: 'Tired', audioURL: ''},
+  {id: '3', nameIndonesian: 'Senyum', nameEnglish: 'Smile', audioURL: ''},
+  {id: '4', nameIndonesian: 'Berlari', nameEnglish: 'Run', audioURL: ''},
+];
 
-export const MOCKED_SAVED_READING: SavedReadingsCardWithID[] = [
+export const MOCKED_SAVED_READING: Reading[] = [
   {
     id: '123',
     title: 'Peter Pesan Kamar Hotel',
@@ -37,6 +37,7 @@ export const MOCKED_SAVED_READING: SavedReadingsCardWithID[] = [
       artwork: 'https://picsum.photos/52',
       duration: 505.88,
     },
+    relevantVocab: MOCKED_SAVED_VOCABS,
   },
   {
     id: '1234',
@@ -50,6 +51,7 @@ export const MOCKED_SAVED_READING: SavedReadingsCardWithID[] = [
       artwork: 'https://picsum.photos/100',
       duration: 372,
     },
+    relevantVocab: MOCKED_SAVED_VOCABS,
   },
 
   {
@@ -64,6 +66,7 @@ export const MOCKED_SAVED_READING: SavedReadingsCardWithID[] = [
       artwork: 'https://picsum.photos/69',
       duration: 425,
     },
+    relevantVocab: MOCKED_SAVED_VOCABS,
   },
   {
     id: '12334',
@@ -77,21 +80,14 @@ export const MOCKED_SAVED_READING: SavedReadingsCardWithID[] = [
       artwork: 'https://picsum.photos/101',
       duration: 344,
     },
+    relevantVocab: MOCKED_SAVED_VOCABS,
   },
 ];
 
-export const MOCKED_SAVED_VOCABS: Vocab[] = [
-  {id: '1', nameIndonesian: 'Tertawa', nameEnglish: 'Laugh', audioURL: ''},
-  {id: '2', nameIndonesian: 'Lelah', nameEnglish: 'Tired', audioURL: ''},
-  {id: '3', nameIndonesian: 'Senyum', nameEnglish: 'Smile', audioURL: ''},
-  {id: '4', nameIndonesian: 'Berlari', nameEnglish: 'Run', audioURL: ''},
-];
 const HomeScreen = ({
   navigation,
 }: NativeStackScreenProps<RootStackParamList, 'HomeScreen'>) => {
-  const [savedReadings, setSavedReadings] = useState<SavedReadingsCardWithID[]>(
-    [],
-  );
+  const [savedReadings, setSavedReadings] = useState<Reading[]>([]);
   const [savedVocabs, setSavedVocabs] = useState<Vocab[]>([]);
   useEffect(() => {
     setSavedReadings(MOCKED_SAVED_READING);
@@ -110,11 +106,9 @@ const HomeScreen = ({
     navigation.navigate('SavedVocabScreen');
   };
 
-  const handlePressCard = (title: string, detail: string, track: Track) => {
+  const handlePressCard = (reading: Reading) => {
     navigation.navigate('ReadingPlayerScreen', {
-      title,
-      detail,
-      track,
+      reading,
     });
   };
   const dateNow = Date.now();

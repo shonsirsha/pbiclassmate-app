@@ -1,40 +1,36 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {StyleSheet, View, ScrollView} from 'react-native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {RootStackParamList} from '../App';
 import ReadingCardSmall from '../components/Cards/ReadingCardSmall';
 import Header from '../components/Header/Header';
-import {MOCKED_SAVED_READING} from './HomeScreen';
-import {Track} from 'react-native-track-player';
+import {Reading} from '../types';
+import {AsyncStorageContext} from '../context/AsyncStorageContext';
 
 const SavedReadingsScreen = ({
   navigation,
 }: NativeStackScreenProps<RootStackParamList, 'SavedReadingsScreen'>) => {
-  const handlePress = (title: string, detail: string, track: Track) => {
+  const handlePress = (reading: Reading) => {
     navigation.navigate('ReadingPlayerScreen', {
-      title,
-      detail,
-      track,
+      reading,
     });
   };
+  const {allSavedReadings} = useContext(AsyncStorageContext);
   return (
     <SafeAreaView>
       <View style={styles.view}>
         <Header title="Saved Readings" withBackButton navigation={navigation} />
         <ScrollView style={styles.scrollView}>
-          {MOCKED_SAVED_READING.map(reading => (
-            <View style={styles.cardContainer} key={reading.id}>
-              <ReadingCardSmall
-                title={reading.title}
-                color={reading.color}
-                onPress={handlePress}
-                id={reading.id}
-                detail={''}
-                track={reading.track}
-              />
-            </View>
-          ))}
+          {allSavedReadings ? (
+            <>
+              {allSavedReadings.map(reading => (
+                <View style={styles.cardContainer} key={reading.id}>
+                  <ReadingCardSmall reading={reading} onPress={handlePress} />
+                </View>
+              ))}
+            </>
+          ) : null}
         </ScrollView>
       </View>
     </SafeAreaView>

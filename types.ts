@@ -1,3 +1,5 @@
+import {Track} from 'react-native-track-player';
+
 export type Vocab = {
   id: string;
   nameIndonesian: string;
@@ -9,7 +11,7 @@ export type Reading = {
   id: string;
   title: string;
   color: string;
-  audioURL: string;
   detail: string;
-  relevantVoccabs: Vocab[];
+  relevantVocab: Vocab[];
+  track: Track;
 };
