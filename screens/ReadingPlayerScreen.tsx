@@ -17,17 +17,15 @@ import HeadingText from '../components/Text/HeadingText';
 import VocabSlider from '../components/VocabSlider/VocabSlider';
 import {COLORS} from '../constants/COLORS';
 import {secondsToHHMMSS} from '../utils';
-import {MOCKED_SAVED_VOCABS} from './HomeScreen';
 import FavouriteButton from '../components/Buttons/FavouriteButton.';
 import {AsyncStorageContext} from '../context/AsyncStorageContext';
-// import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const ReadingPlayerScreen = ({
   navigation,
   route,
 }: NativeStackScreenProps<RootStackParamList, 'ReadingPlayerScreen'>) => {
   const {reading} = route.params;
-  const {title, detail, track} = reading;
+  const {title, detail, track, relevantVocab} = reading;
   const [currentlyPlaying, setCurrentlyPlaying] = useState<Track | null>();
   const [favorite, setFavorite] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -91,7 +89,8 @@ const ReadingPlayerScreen = ({
     // await AsyncStorage.removeItem('readings');
     // await AsyncStorage.removeItem('vocab');
   };
-  const handlePressClose = () => {
+  const handlePressClose = async () => {
+    await TrackPlayer.pause();
     navigation.goBack();
   };
 
@@ -190,7 +189,7 @@ const ReadingPlayerScreen = ({
       </View>
       <VocabSlider
         title="Relevant Vocabularies"
-        vocabs={MOCKED_SAVED_VOCABS}
+        vocabs={relevantVocab}
         onPressGoToSavedVocab={() => {}}
         showSavedVocabLink={false}
       />

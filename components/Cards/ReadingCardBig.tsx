@@ -9,15 +9,13 @@ type TReadingCardProp = {
 };
 
 const ReadingCardBig = ({reading, onPress}: TReadingCardProp) => {
-  const {id, title, color, detail} = reading;
+  const {title, color, detail} = reading;
   return (
     <TouchableOpacity
       style={styles({color}).card}
       activeOpacity={0.55}
       onPress={() => onPress(reading)}>
-      <BodyText>
-        {title} {id}
-      </BodyText>
+      <BodyText>{title}</BodyText>
       <BodyText fontLight style={styles().detailText}>
         {detail}
       </BodyText>
