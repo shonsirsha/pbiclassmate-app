@@ -1,5 +1,5 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   ActivityIndicator,
   Alert,
@@ -15,12 +15,32 @@ import BodyText from '../components/Text/BodyText';
 import HeadingText from '../components/Text/HeadingText';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {getReading} from '../api/reading';
+import {useNetInfo} from '@react-native-community/netinfo';
 
 const QRCodeScannerScreen = ({
   navigation,
 }: NativeStackScreenProps<RootStackParamList, 'QRCodeScannerScreen'>) => {
   const [isTorchOn, setIsTorchOn] = useState(false);
   const [loading, setLoading] = useState(false);
+  const netInfo = useNetInfo();
+
+  useEffect(() => {
+    if (netInfo.isConnected === false) {
+      Alert.alert(
+        'No Internet Connection',
+        'Internet is needed to scan a QR code. Please try again when internet is available.',
+        [
+          {
+            text: 'Close',
+            onPress: () => {
+              setLoading(false);
+            },
+          },
+        ],
+      );
+    }
+  }, [netInfo.isConnected]);
+
   const {on, off, torch} = RNCamera.Constants.FlashMode;
   const torchOn = on && torch;
   const torchOff = off;
@@ -39,18 +59,33 @@ const QRCodeScannerScreen = ({
       });
       setLoading(false);
     } else {
-      Alert.alert(
-        'Oops!',
-        'Sorry, the QR code you scanned is invalid or the data cannot be found. Please try again.',
-        [
-          {
-            text: 'Try again',
-            onPress: () => {
-              setLoading(false);
+      if (netInfo.isConnected === true) {
+        Alert.alert(
+          'Oops!',
+          'Sorry, the QR code you scanned is invalid or the data cannot be found. Please try again.',
+          [
+            {
+              text: 'Try again',
+              onPress: () => {
+                setLoading(false);
+              },
             },
-          },
-        ],
-      );
+          ],
+        );
+      } else {
+        Alert.alert(
+          'No Internet Connection',
+          'Internet is needed to scan a QR code. Please try again when internet is available.',
+          [
+            {
+              text: 'Close',
+              onPress: () => {
+                setLoading(false);
+              },
+            },
+          ],
+        );
+      }
     }
   };
   return (

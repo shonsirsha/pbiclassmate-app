@@ -21,8 +21,8 @@ const VocabModalSheetProvider = ({children}: {children: ReactNode}) => {
   };
 
   const closeVocab = () => {
-    setVocab(undefined);
     bottomSheetModalRef?.current?.dismiss();
+    setVocab(undefined);
   };
 
   return (

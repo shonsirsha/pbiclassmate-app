@@ -10,7 +10,13 @@ function NavigationWrapper({
 }) {
   const {closeVocab} = useContext(VocabModalSheetContext);
   useEffect(() => {
-    closeVocab();
+    setTimeout(() => {
+      closeVocab();
+    }, 100);
+
+    setTimeout(() => {
+      closeVocab();
+    }, 500);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [routeName]);
   return <>{children}</>;
