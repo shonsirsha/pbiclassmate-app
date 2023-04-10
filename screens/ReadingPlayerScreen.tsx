@@ -85,9 +85,6 @@ const ReadingPlayerScreen = ({
   const handlePressFavBtn = async () => {
     setFavorite(!favorite);
     saveReading(route.params.reading, !favorite);
-
-    // await AsyncStorage.removeItem('readings');
-    // await AsyncStorage.removeItem('vocab');
   };
   const handlePressClose = async () => {
     await TrackPlayer.pause();

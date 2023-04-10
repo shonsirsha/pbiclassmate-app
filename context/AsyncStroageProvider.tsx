@@ -39,7 +39,6 @@ const AsyncStroageProvider = ({children}: {children: ReactNode}) => {
       await storeData('vocab', newVocab);
     } else {
       await storeData('vocab', [vocab]);
-      console.warn('[vocab] saving first time..');
     }
     await getAllSavedVocab();
   };
@@ -52,7 +51,6 @@ const AsyncStroageProvider = ({children}: {children: ReactNode}) => {
       await storeData('readings', newVocab);
     } else {
       await storeData('readings', [reading]);
-      console.warn('[reading] saving first time..');
     }
     await getAllReadings();
   };
