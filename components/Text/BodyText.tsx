@@ -15,6 +15,7 @@ const styles = ({fontLight}: {fontLight: boolean}) =>
     text: {
       fontWeight: fontLight ? '400' : '600',
       fontSize: 16,
+      color: '#000',
     },
   });
 
