@@ -105,11 +105,12 @@ const ReadingPlayerScreen = ({
         artwork: track.artwork,
       });
       await TrackPlayer.play();
-      await TrackPlayer.setRepeatMode(RepeatMode.Off);
       setIsPlaying(true);
+      await TrackPlayer.setRepeatMode(RepeatMode.Off);
     } else {
       if (!isPlaying) {
         //init / first play
+        await TrackPlayer.reset();
         await TrackPlayer.add({
           id: title,
           url: track.url,
@@ -118,13 +119,19 @@ const ReadingPlayerScreen = ({
           artwork: track.artwork,
         });
         await TrackPlayer.play();
+        setIsPlaying(true);
         await TrackPlayer.setRepeatMode(RepeatMode.Off);
       } else {
         // pausing
         await TrackPlayer.pause();
+        setIsPlaying(false);
       }
-      setIsPlaying(!isPlaying);
     }
+  };
+
+  const pause = async () => {
+    await TrackPlayer.pause();
+    setIsPlaying(false);
   };
 
   return (
@@ -153,8 +160,11 @@ const ReadingPlayerScreen = ({
             maximumTrackTintColor="#52527a"
             thumbTintColor={COLORS.primary}
             value={currentlyPlayingIsCurrentlyOpened ? progress.position : 0}
-            onSlidingComplete={value => {
-              TrackPlayer.seekTo(value);
+            onSlidingComplete={async value => {
+              await TrackPlayer.seekTo(value);
+              if (value === track.duration) {
+                await pause();
+              }
             }}
           />
           <View style={styles.durationsContainer}>

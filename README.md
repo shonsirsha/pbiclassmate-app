@@ -47,21 +47,19 @@ Before you begin, ensure you have the following installed on your system:
 
 For macOS:
 
-1. To run the app on an iOS emulator:
+1. To run the app on iOS:
 
    ```
    npm run ios
    ```
 
-3. To run the app on an Android emulator:
+3. To run the app on Android:
 
    ```
    npm run android
    ```
 
-3. To run the app on iOS device, go to the `ios` folder, open the `PBIClassmate.xcworkspace`, and hit the "Play" button on Xcode.
-
-4. Please refer to the [official documentation](https://reactnative.dev/docs/running-on-device?platform=android) for other methods of running the app on the same platform (macOS) as well as on other platforms.
+3. Please refer to the [official documentation](https://reactnative.dev/docs/running-on-device?platform=android) for other methods to run the app on the same platform (macOS), as well as on other platforms.
 
 ### Important directory and files
 
