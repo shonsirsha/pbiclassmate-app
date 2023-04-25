@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useCallback, useContext, useEffect, useState} from 'react';
 import Slider from '@react-native-community/slider';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {View, SafeAreaView, StyleSheet, Image} from 'react-native';
@@ -36,6 +36,12 @@ const ReadingPlayerScreen = ({
     ? currentlyPlaying.url === track.url
     : false;
 
+  const reset = useCallback(async () => {
+    await pause();
+    await TrackPlayer.reset();
+    setCurrentlyPlaying(null);
+  }, []);
+
   useEffect(() => {
     if (allSavedReadings) {
       const isSaved = allSavedReadings.findIndex(r => r.id === reading.id) >= 0;
@@ -66,10 +72,14 @@ const ReadingPlayerScreen = ({
     getIsPlaying();
   }, [track.url]);
 
+  // to 'watch' changes
+  // of the progress & track
   useEffect(() => {
     if (track.duration) {
-      if (progress.position > track.duration) {
-        setIsPlaying(false);
+      // audio has finished playing.
+      if (progress.position >= track.duration) {
+        // pause the player (stop.)
+        pause();
       }
     }
   }, [progress.position, track]);
@@ -82,16 +92,33 @@ const ReadingPlayerScreen = ({
     }
     return null;
   };
+
   const handlePressFavBtn = async () => {
     setFavorite(!favorite);
     saveReading(route.params.reading, !favorite);
   };
+
   const handlePressClose = async () => {
-    await TrackPlayer.pause();
+    await pause();
     navigation.goBack();
   };
 
   const handlePlay = async () => {
+    //  initial play
+    if (!isPlaying && !currentlyPlaying) {
+      await TrackPlayer.reset();
+      await TrackPlayer.add({
+        id: title,
+        url: track.url,
+        type: TrackType.Default,
+        title,
+        artwork: track.artwork,
+      });
+      await play();
+      await TrackPlayer.setRepeatMode(RepeatMode.Off);
+      return;
+    }
+
     //if theres a currently playing track
     //and it's not the same track from props
     //reset and play the track from props
@@ -104,13 +131,18 @@ const ReadingPlayerScreen = ({
         title,
         artwork: track.artwork,
       });
-      await TrackPlayer.play();
-      setIsPlaying(true);
+      await play();
       await TrackPlayer.setRepeatMode(RepeatMode.Off);
-    } else {
-      if (!isPlaying) {
-        //init / first play
-        await TrackPlayer.reset();
+      return;
+    }
+
+    //if progress is >= duration it means the audio
+    // has finished playing
+    if (track.duration && progress.position >= track.duration) {
+      await reset();
+      //to fix race condition
+      //for the time being..
+      setTimeout(async () => {
         await TrackPlayer.add({
           id: title,
           url: track.url,
@@ -118,13 +150,18 @@ const ReadingPlayerScreen = ({
           title,
           artwork: track.artwork,
         });
-        await TrackPlayer.play();
-        setIsPlaying(true);
-        await TrackPlayer.setRepeatMode(RepeatMode.Off);
+        await play();
+      }, 100);
+    } else {
+      // atp, we've verified
+      // that the track is indeed the currently opened track
+      // (not another track)
+
+      //so just control pause and play
+      if (isPlaying) {
+        await pause();
       } else {
-        // pausing
-        await TrackPlayer.pause();
-        setIsPlaying(false);
+        await play();
       }
     }
   };
@@ -132,6 +169,11 @@ const ReadingPlayerScreen = ({
   const pause = async () => {
     await TrackPlayer.pause();
     setIsPlaying(false);
+  };
+
+  const play = async () => {
+    await TrackPlayer.play();
+    setIsPlaying(true);
   };
 
   return (
@@ -162,9 +204,6 @@ const ReadingPlayerScreen = ({
             value={currentlyPlayingIsCurrentlyOpened ? progress.position : 0}
             onSlidingComplete={async value => {
               await TrackPlayer.seekTo(value);
-              if (value === track.duration) {
-                await pause();
-              }
             }}
           />
           <View style={styles.durationsContainer}>
